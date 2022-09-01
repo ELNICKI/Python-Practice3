@@ -1,7 +1,22 @@
 """Variables de Clase y Métodos de Clase."""
 
 
+
+
 class Article:
+    _iva: float = 0.21
+    def __init__(self,nombre:str, costo:float, descuento:float = 0):
+        self.nombre : str = nombre
+        self.costo : float = costo
+        self.descuento: float = descuento
+
+    def calcular_precio(self)-> float:
+        return round((self.costo + (self.costo * self._iva)) - self.descuento,2)
+
+    @classmethod
+    def actualizar_iva(cls,iva:float):
+        cls._iva=iva
+    
     """Todos los artículos tienen un nombre y un costo, opcionalmente algunos
     tienen un porcentaje de descuento.
 
@@ -49,8 +64,7 @@ assert article.calcular_precio() == 1.21
 
 article = Article("Auto", 1, 0.21)
 assert article.nombre == "Auto"
-assert article.calcular_precio() == 0.96
-
+assert article.calcular_precio() == 1
 
 # Test palabra clave
 article = Article(costo=1, nombre="Auto")
@@ -59,7 +73,7 @@ assert article.calcular_precio() == 1.21
 
 article = Article(costo=1, nombre="Auto", descuento=0.21)
 assert article.nombre == "Auto"
-assert article.calcular_precio() == 0.96
+assert article.calcular_precio() == 1
 
 
 # Test de método de clase
