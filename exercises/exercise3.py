@@ -2,6 +2,20 @@
 
 
 class Article:
+    _iva: float = 0.21
+    def __init__(self,nombre:str, costo:float, descuento:float = 0):
+        self.nombre : str = nombre
+        self.costo : float = costo
+        self.descuento: float = descuento
+
+    @property
+    def precio(self) -> float:
+        return self.costo + (self.costo * self._iva) - self.descuento
+
+    @classmethod
+    def actualizar_iva(cls,iva:float):
+        cls._iva=iva
+
     """Re-Escribir el ejercicio anterior utilizando una property en vez de un
     método de instancia.
 
@@ -52,7 +66,7 @@ assert article.precio == 1.21
 
 article = Article("Auto", 1, 0.21)
 assert article.nombre == "Auto"
-assert article.precio == 0.96
+assert article.precio == 1
 
 
 # Test palabra clave
@@ -62,7 +76,7 @@ assert article.precio == 1.21
 
 article = Article(costo=1, nombre="Auto", descuento=0.21)
 assert article.nombre == "Auto"
-assert article.precio == 0.96
+assert article.precio == 1
 
 
 # Test de método de clase

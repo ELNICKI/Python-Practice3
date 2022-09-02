@@ -23,6 +23,16 @@ Restricciones:
     - Utilizar Type Hints en todos los métodos y variables
 """
 
+@dataclass
+class Carrera:
+    materias:str
+
+    def __len__(self):
+        return len(self.materias)
+
+@dataclass
+class Materia:
+    nombre:str
 
 # NO MODIFICAR - INICIO
 # Test parámetro obligatorio
