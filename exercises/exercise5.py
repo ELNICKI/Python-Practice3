@@ -37,10 +37,38 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List
 
+@dataclass
+class Contribuyente(ABC):
+    @abstractmethod
+    def calcular_sueldo(self):
+        pass
+
+class Empleado(Contribuyente):
+    def __init__(self, sueldo):
+        self.sueldo = sueldo
+    
+    def calcular_sueldo(self):
+        return self.sueldo * 0.83
+
+class Monotributista(Contribuyente):
+    def __init__(self, sueldo):
+        self.sueldo = sueldo
+
+    def calcular_sueldo(self):
+        if self.sueldo < 370000:
+            return self.sueldo - 2646.22
+        elif self.sueldo < 550000:
+            return self.sueldo - 2958.95
+        elif self.sueldo < 770000:
+            return self.sueldo - 3382.62
+        else:
+            return self.sueldo - 3988.85
 
 def calcular_sueldos(contribuyentes: List[Contribuyente]):
-    """Data una lista de contribuyentes, devuelve una lista de los sueldos de
-    cada uno."""
+    sueldos = []
+    for i in contribuyentes:
+        sueldos.append(i.calcular_sueldo())
+    return sueldos
 
 
 # NO MODIFICAR - INICIO
@@ -97,7 +125,6 @@ assert maria.calcular_sueldo() == 62250.0
 # Test Calculadora de sueldos
 
 contribuyentes = [Monotributista(80_000), Empleado(80_000)]
-
 assert calcular_sueldos(contribuyentes) == [76011.15, 66400.0]
 
 # NO MODIFICAR - FIN
